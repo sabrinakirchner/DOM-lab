@@ -143,3 +143,4 @@ if (clickedElement.textContent.toLowerCase()=== 'about'){
     mainEL.innerHTML ='<h1>about</h1>';    
 }
 
+
