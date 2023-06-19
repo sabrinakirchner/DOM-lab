@@ -1,45 +1,46 @@
 //task 1.0
 const mainEL = document.querySelector('main');
-//task 1.1 
-const mainBigColor = getComputedStyle(document.documentElement).getPropertyValue('--main-bg');
 
+//task 1.1
+const mainBigColor = getComputedStyle(document.documentElement).getPropertyValue('--main-bg');
 mainEL.style.backgroundColor = 'var(${mainBgColor})'; 
+
 //task 1.2
 mainEL.innerHTML ='<h1>SEI Rockes!</h1>';
-//task 1.3
-mainEL.classList.add('flex-ctr'); 
-//task 2.2 //task 2.3 
-const topMenuEL = document.querySelector('#top-menu'); 
 
-//task 3.0 //task 5.0
+//task 1.3 
+mainEL.classList.add('flex-ctr'); 
+
+//task 2.0 
+const topMenuEL = document.getElementById('#top-menu'); 
+
+//task 2.1
+topMenuElement.style.height ='100%'; 
+
+//task 2.2 
+const topMenuBgColor = getComputedStyle(document.documentElement).getPropertyValue('--top-menu-bg');
+topMenuEL.style.backgroundColor = 'var(${topMenuBgColor})'; 
+
+//task 2.3 
+topMenuEL.classList.add('flex-around'); 
+
+//task 3.0
+// Menu data structure
 var menuLinks = [
     {text: 'about', href: '/about'},
-    {text: 'catalog', href: '#', subLinks: [
-      {text: 'all', href: '/catalog/all'},
-      {text: 'top selling', href: '/catalog/top'},
-      {text: 'search', href: '/catalog/search'},
-    ]},
-    {text: 'orders', href: '#' , subLinks: [
-      {text: 'new', href: '/orders/new'},
-      {text: 'pending', href: '/orders/pending'},
-      {text: 'history', href: '/orders/history'},
-    ]},
-    {text: 'account', href: '#', subLinks: [
-      {text: 'profile', href: '/account/profile'},
-      {text: 'sign out', href: '/account/signout'},
-    ]},
+    {text: 'catalog', href: '/catalog'},
+    {text: 'orders', href: '/orders'},
+    {text: 'account', href: '/account'},
   ];
 
-  //task 3.1
-
-  menuLinks.forEach(link =>{
+//task 3.1 
+menuLinks.forEach(link=> {
     const newLink = document.createElement('a');
     newLink.href = link.href;
     newLink.textContent = link.text; 
-    topMenuEL.appendChild(newLink);
-  });
+    topMenuEL.appendChild(newLink); 
+});
 
-//_____________________________________________//
 
 //task 4.0
 const subMenuEl = document.querySelector('#sub-menu');
@@ -75,7 +76,7 @@ topMenuEl.addEventListener('click', function(event){
     }
 
     console.log(clickedElement.textContent); 
-});
+
 
 //task 5.3
 if (clickedElement.classList.contains('active')){
@@ -89,4 +90,56 @@ if (clickedElement.classList.contains('active')){
 topMenuLinks.forEach(link =>{
     link.classList.remove('active');
 }); 
+//task 5.5
+clickedElement.classList.add('active'); 
+
+//task 5.6
+const linkObject = menuLinks.find(link => link.text === clickedElement.textContent);
+showingSubMenu = linkObject && linkObject.sublinks? true : false;
+
+//task 5.7
+if(showingSubMenu){
+    buildSubMenu(linkObject.subLinks);
+    subMenuEl.style.top = '100%';
+}else{
+    subMenuEl.style.top = '0';
+}
+});
+
+function buildSubMenu(subLinks){
+    subMenuEl.innerHTML = '';
+
+    subLinks.forEach(link => {
+        const newLink = document.createElement('a');
+        newLink.href = link.href; 
+        newLink.textContent = link.text; 
+        subMenuEl.appendChild(newLink);
+    });
+}
+
+// task 6.0 
+subMenuEl.addEventListener('click',function(event){
+   event.preventDefault();
+
+   const clickedElement = event.target;
+   if(!clickedElement.matches('a')){
+    return;
+   }
+   console.log(clickedElement.textContent);
+});
+
+//task 6.1   
+showingSubMenu = false; 
+subMenuEl.style.top = '0';
+
+//task 6.2 
+topMenuLinks.forEach(link => {
+    link.classList.remove('active');
+});
+
+mainEl.innerHTML = '<h1>${clickedElement.textContent}</h1>';
+
+if (clickedElement.textContent.toLowerCase()=== 'about'){
+    mainEL.innerHTML ='<h1>about</h1>';    
+}
 
